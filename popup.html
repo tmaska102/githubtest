@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HighFive Plugin</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="popup.css">
+    </head>
+   
+    <body>
+        <div class="alert">
+            <h1>High Five Plugin</h1>
+            <button class="highFive">Gimme a High Five!</button>
+        </div>
+    
+        <div class="popup-overlay">
+            <div class="popup-content">
+                <h2>BAM!</h2>
+                <p>Good one!</p>
+                <button class="close">&times;</button>
+            </div>
+        </div>
+    </body>
+</html>
+
+<script>
+    $(".highFive").on("click", function () {
+        $(".popup-overlay, .popup-content").addClass("active");
+    })
+    $(".close").on("click", function() {
+        $(".popup-overlay, .popup-content").removeClass("active");
+    })
+
+    chrome.contextMenus.onClicked.addListener(function (clickData) {
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {type: "openModeal"});
+        });
+    });
+
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+        switch (request.type) {
+            case "openModal":
+                $('popup-overlay').modal( {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                break;
+        }
+    })
+</script>

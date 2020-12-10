@@ -1,0 +1,24 @@
+{
+    "manifest_version": 2,
+
+    "name": "High Five Plugin",
+    "description": "This is a High Five plugin for learning purposes.",
+    "version": "1.0",
+
+    "browser_action": {
+        "default_icon": "Hand Icon.png",
+        "default_popup": "popup.html"
+    },
+  
+    "content_scripts": [
+        {
+            "matches": ["popup.html"],
+            "css":["popup.css"],
+            "run_at":"document_end"
+        } 
+    ],
+
+    "permissions": [
+        "activeTab"
+    ]
+}
